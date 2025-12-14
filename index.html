@@ -17,6 +17,7 @@ body {
 header {
   text-align: center;
   padding: 30px;
+  display: none; /* Ẩn khi chưa đăng nhập */
 }
 
 header h1 {
@@ -122,7 +123,7 @@ button {
 
 <body>
 
-<header>
+<header id="pageHeader">
   <h1>Album Gia Đình</h1>
 </header>
 
@@ -130,7 +131,7 @@ button {
 
   <div class="login-box" id="loginBox">
     <h3>Nhập mật khẩu</h3>
-    <input type="password" id="password">
+    <input type="password" id="password" placeholder="Mật khẩu">
     <br>
     <button onclick="login()">Truy cập</button>
   </div>
@@ -152,9 +153,12 @@ let albumsData = [];
 function login() {
   if (password.value === PASSWORD) {
     loginBox.style.display = "none";
+    pageHeader.style.display = "block"; // hiện tiêu đề
     home.style.display = "block";
     loadHome();
-  } else alert("Sai mật khẩu");
+  } else {
+    alert("Sai mật khẩu");
+  }
 }
 
 function loadHome() {
@@ -163,7 +167,9 @@ function loadHome() {
     .then(data => {
       albumsData = data.albums;
       home.innerHTML = `
-        <div class="cover"><img src="${data.cover}"></div>
+        <div class="cover">
+          <img src="${data.cover}">
+        </div>
       `;
       data.albums.forEach((a, i) => {
         const div = document.createElement("div");
@@ -184,7 +190,9 @@ function openAlbum(index) {
     <div class="back" onclick="goBack()">← Quay lại</div>
     <h2>${album.title}</h2>
     <div class="gallery">
-      ${album.photos.map(p => `<img src="${p}" onclick="showImage('${p}')">`).join("")}
+      ${album.photos.map(p =>
+        `<img src="${p}" onclick="showImage('${p}')">`
+      ).join("")}
     </div>
   `;
 }
@@ -206,4 +214,3 @@ function closeImage() {
 
 </body>
 </html>
-
