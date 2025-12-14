@@ -3,17 +3,24 @@
 
   "albums": [
     {
-      "title": "Đà Lạt",
+      "title": "Tết",
       "photos": [
-        "images/dalat1.jpg",
-        "images/dalat3.jpg"
+        "images/tet1.jpg",
+        "images/tet2.jpg"
       ]
     },
     {
       "title": "Tốt nghiệp",
       "photos": [
         "images/totnghiep1.jpg",
-        "images/tn2.jpg"
+        "images/totnghiep2.jpg"
+      ]
+    },
+    {
+      "title": "Đà Lạt",
+      "photos": [
+        "images/dalat1.jpg",
+        "images/dalat3.jpg"
       ]
     },
     {
@@ -24,10 +31,10 @@
       ]
     },
     {
-      "title": "Tết",
+      "tittle": "Vĩnh Hy",
       "photos": [
-        "images/tet1.jpg",
-        "images/tet2.jpg"
+        "images/vinhhy1.jpg",
+        "images/vinhhy2.jpg"
       ]
     }
   ]
