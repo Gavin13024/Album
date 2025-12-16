@@ -14,130 +14,100 @@ body {
   background: #f6f1e7;
 }
 
-/* ===== LOGIN ===== */
-#loginPage {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+header {
+  text-align: center;
+  padding: 30px;
+  display: none;
+}
+
+header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 40px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
 }
 
 .login-box {
+  max-width: 400px;
+  margin: 80px auto;
   background: white;
   padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border-radius: 20px;
   text-align: center;
 }
 
 input, button {
-  padding: 10px;
+  padding: 12px;
   font-size: 16px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 button {
   background: #c9b27c;
-  color: white;
   border: none;
-  border-radius: 10px;
+  color: white;
+  border-radius: 14px;
   cursor: pointer;
 }
 
-/* ===== HOME ===== */
-#homePage {
-  display: none;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 350px 1fr;
-}
-
-/* LEFT */
-.left {
-  padding: 40px;
-  background: #f6f1e7;
-  position: relative;
-}
-
-.left::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: -1px;
-  width: 100px;
-  height: 100%;
-  background: linear-gradient(to right, #f6f1e7 0%, rgba(246,241,231,0) 100%);
-  pointer-events: none;
-}
-
-.album-wrapper {
-  margin-top: 120px;
-  max-width: 240px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.album-title {
-  font-size: 26px;
+/* ===== YEAR LIST ===== */
+.year-item {
+  background: white;
+  padding: 25px;
+  border-radius: 18px;
   margin-bottom: 20px;
-}
-
-.year-list div {
-  font-size: 20px;
-  padding: 10px 0;
+  font-size: 26px;
+  font-family: 'Playfair Display', serif;
   cursor: pointer;
-}
-
-.year-list div:hover {
-  text-decoration: underline;
-}
-
-/* RIGHT */
-.right img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: space-between;
 }
 
 /* ===== TIMELINE ===== */
-#timelinePage {
-  display: none;
-  padding: 40px;
-}
-
 .back {
   cursor: pointer;
-  margin-bottom: 20px;
   font-size: 18px;
+  margin-bottom: 20px;
 }
 
 .event {
-  margin-bottom: 50px;
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
 .event-date {
   font-weight: 600;
-  color: #8a7a4f;
+  color: #8a7b55;
+  margin-bottom: 5px;
 }
 
 .event-title {
-  font-size: 24px;
-  margin: 5px 0 15px;
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  margin-bottom: 15px;
 }
 
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
 }
 
 .gallery img {
   width: 100%;
-  border-radius: 8px;
+  border-radius: 16px;
   cursor: pointer;
 }
 
-/* FULLSCREEN */
+/* ===== IMAGE VIEW ===== */
 #overlay {
   position: fixed;
   inset: 0;
@@ -151,114 +121,99 @@ button {
   max-width: 90%;
   max-height: 90%;
 }
+
+#close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+}
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginPage">
-  <div class="login-box">
+<header id="pageHeader">
+  <h1>Album Gia Đình</h1>
+</header>
+
+<div class="container">
+
+  <div class="login-box" id="loginBox">
     <h3>Nhập mật khẩu</h3>
-    <input type="password" id="passwordInput">
+    <input type="password" id="password">
     <br>
-    <button onclick="doLogin()">Truy cập</button>
+    <button onclick="login()">Truy cập</button>
   </div>
+
+  <div id="home" style="display:none"></div>
+  <div id="yearView" style="display:none"></div>
+
 </div>
 
-<!-- HOME -->
-<div id="homePage">
-  <div class="left">
-    <div class="album-wrapper">
-      <div class="album-title">Năm</div>
-      <div class="year-list" id="yearList"></div>
-    </div>
-  </div>
-  <div class="right">
-    <img id="coverImg">
-  </div>
-</div>
-
-<!-- TIMELINE -->
-<div id="timelinePage"></div>
-
-<!-- OVERLAY -->
 <div id="overlay" onclick="closeImage()">
+  <span id="close">✕</span>
   <img id="overlayImg">
 </div>
 
 <script>
 const PASSWORD = "giadinh";
+let yearsData = [];
 
-const loginPage = document.getElementById("loginPage");
-const homePage = document.getElementById("homePage");
-const timelinePage = document.getElementById("timelinePage");
-const yearList = document.getElementById("yearList");
-const coverImg = document.getElementById("coverImg");
-
-const overlay = document.getElementById("overlay");
-const overlayImg = document.getElementById("overlayImg");
-
-let years = [];
-
-/* LOGIN */
-function doLogin() {
-  if (passwordInput.value === PASSWORD) {
-    loginPage.style.display = "none";
-    homePage.style.display = "grid";
-    loadData();
-  } else {
-    alert("Sai mật khẩu");
-  }
+function login() {
+  if (password.value === PASSWORD) {
+    loginBox.style.display = "none";
+    pageHeader.style.display = "block";
+    home.style.display = "block";
+    loadHome();
+  } else alert("Sai mật khẩu");
 }
 
-/* LOAD DATA */
-function loadData() {
+function loadHome() {
   fetch("data.json")
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
-      coverImg.src = data.cover;
-      years = data.years;
-
-      yearList.innerHTML = "";
-      years.forEach((y, i) => {
+      yearsData = data.years;
+      home.innerHTML = "";
+      yearsData.forEach((y, i) => {
         const div = document.createElement("div");
-        div.innerText = y.year;
+        div.className = "year-item";
+        div.innerHTML = `<span>${y.year}</span><span>›</span>`;
         div.onclick = () => openYear(i);
-        yearList.appendChild(div);
+        home.appendChild(div);
       });
     });
 }
 
-/* OPEN YEAR */
 function openYear(index) {
-  homePage.style.display = "none";
-  timelinePage.style.display = "block";
+  home.style.display = "none";
+  yearView.style.display = "block";
 
-  const year = years[index];
-
-  timelinePage.innerHTML = `
+  const year = yearsData[index];
+  yearView.innerHTML = `
     <div class="back" onclick="goBack()">← Quay lại</div>
-    <h1>${year.year}</h1>
+    <h2>${year.year}</h2>
     ${year.events.map(e => `
       <div class="event">
         <div class="event-date">${e.date}</div>
         <div class="event-title">${e.title}</div>
         <div class="gallery">
-          ${e.photos.map(p => `<img src="${p}" onclick="showImage('${p}')">`).join("")}
+          ${e.photos.map(p =>
+            `<img src="${p}" onclick="showImage('${p}')">`
+          ).join("")}
         </div>
       </div>
     `).join("")}
   `;
 }
 
-/* BACK */
 function goBack() {
-  timelinePage.style.display = "none";
-  homePage.style.display = "grid";
+  yearView.style.display = "none";
+  home.style.display = "block";
 }
 
-/* FULLSCREEN */
 function showImage(src) {
   overlayImg.src = src;
   overlay.style.display = "flex";
