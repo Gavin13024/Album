@@ -5,7 +5,6 @@
 <title>Album gia đình</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
@@ -17,25 +16,48 @@ body {
 
 /* ===== HEADER ===== */
 header {
-  text-align: center;
-  padding: 28px 20px;
-  background: #f6f1e7;
   display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 18px 20px;
+  background: #f6f1e7;
 }
 
-header h1 {
-  margin: 0;
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 42px;
-  letter-spacing: 1px;
-}
-
-/* Sticky header when viewing year */
+/* sticky */
 header.sticky {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 100;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* back button in header */
+#headerBack {
+  position: absolute;
+  left: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #555;
+  display: none;
+}
+
+/* title */
+header h1 {
+  margin: 0;
+  font-size: 36px;
+  letter-spacing: 1px;
+}
+
+/* main title */
+header.home h1 {
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* year title */
+header.year h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
 }
 
 /* ===== CONTAINER ===== */
@@ -55,7 +77,6 @@ header.sticky {
   text-align: center;
 }
 
-/* ===== INPUT & BUTTON ===== */
 input, button {
   padding: 12px;
   font-size: 16px;
@@ -80,30 +101,16 @@ button {
 /* ===== YEAR LIST ===== */
 .year-item {
   background: white;
-  padding: 22px;
+  padding: 18px 22px;
   border-radius: 18px;
-  margin-bottom: 18px;
-  font-size: 22px; /* ↓ nhỏ lại */
+  margin-bottom: 14px;
+  font-size: 18px; /* ↓ nhỏ hơn nữa */
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-/* ===== YEAR VIEW ===== */
-.back {
-  cursor: pointer;
-  font-size: 16px;
-  margin-bottom: 16px;
-  color: #555;
-}
-
-.year-title {
-  font-size: 26px;
-  font-weight: 600;
-  margin-bottom: 24px;
 }
 
 /* ===== EVENTS ===== */
@@ -167,7 +174,8 @@ button {
 
 <body>
 
-<header id="pageHeader">
+<header id="pageHeader" class="home">
+  <div id="headerBack" onclick="goBack()">← Quay lại</div>
   <h1 id="headerTitle">Album gia đình</h1>
 </header>
 
@@ -197,8 +205,10 @@ let yearsData = [];
 function login() {
   if (password.value === PASSWORD) {
     loginBox.style.display = "none";
-    pageHeader.style.display = "block";
+    pageHeader.style.display = "flex";
+    pageHeader.className = "home";
     pageHeader.classList.remove("sticky");
+    headerBack.style.display = "none";
     headerTitle.innerText = "Album gia đình";
     home.style.display = "block";
     loadHome();
@@ -229,30 +239,30 @@ function openYear(index) {
   home.style.display = "none";
   yearView.style.display = "block";
 
-  pageHeader.classList.add("sticky");
-  headerTitle.innerText = `Năm ${yearsData[index].year}`;
+  pageHeader.className = "year sticky";
+  headerBack.style.display = "block";
+  headerTitle.innerText = yearsData[index].year; // CHỈ HIỂN THỊ SỐ
 
   const year = yearsData[index];
-  yearView.innerHTML = `
-    <div class="back" onclick="goBack()">← Quay lại</div>
-    ${year.events.map(e => `
-      <div class="event">
-        <div class="event-date">${e.date}</div>
-        <div class="event-title">${e.title}</div>
-        <div class="gallery">
-          ${e.photos.map(p =>
-            `<img src="${p}" onclick="showImage('${p}')">`
-          ).join("")}
-        </div>
+  yearView.innerHTML = year.events.map(e => `
+    <div class="event">
+      <div class="event-date">${e.date}</div>
+      <div class="event-title">${e.title}</div>
+      <div class="gallery">
+        ${e.photos.map(p =>
+          `<img src="${p}" onclick="showImage('${p}')">`
+        ).join("")}
       </div>
-    `).join("")}
-  `;
+    </div>
+  `).join("");
 }
 
 function goBack() {
   yearView.style.display = "none";
   home.style.display = "block";
+  pageHeader.className = "home";
   pageHeader.classList.remove("sticky");
+  headerBack.style.display = "none";
   headerTitle.innerText = "Album gia đình";
 }
 
