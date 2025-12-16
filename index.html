@@ -2,10 +2,11 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Album Gia Đình</title>
+<title>Album gia đình</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -14,15 +15,27 @@ body {
   background: #f6f1e7;
 }
 
+/* ===== HEADER ===== */
 header {
   text-align: center;
-  padding: 30px;
+  padding: 28px 20px;
+  background: #f6f1e7;
   display: none;
 }
 
 header h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 40px;
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  letter-spacing: 1px;
+}
+
+/* Sticky header when viewing year */
+header.sticky {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 /* ===== CONTAINER ===== */
@@ -35,13 +48,14 @@ header h1 {
 /* ===== LOGIN ===== */
 .login-box {
   max-width: 400px;
-  margin: 80px auto;
+  margin: 90px auto;
   background: white;
   padding: 30px;
   border-radius: 20px;
   text-align: center;
 }
 
+/* ===== INPUT & BUTTON ===== */
 input, button {
   padding: 12px;
   font-size: 16px;
@@ -56,14 +70,20 @@ button {
   cursor: pointer;
 }
 
+/* ===== COVER ===== */
+.cover img {
+  width: 100%;
+  border-radius: 22px;
+  margin-bottom: 30px;
+}
+
 /* ===== YEAR LIST ===== */
 .year-item {
   background: white;
-  padding: 26px;
+  padding: 22px;
   border-radius: 18px;
-  margin-bottom: 20px;
-  font-size: 28px;
-  font-family: 'Montserrat', sans-serif; /* FONT MỚI */
+  margin-bottom: 18px;
+  font-size: 22px; /* ↓ nhỏ lại */
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
@@ -72,18 +92,26 @@ button {
   align-items: center;
 }
 
-/* ===== TIMELINE ===== */
+/* ===== YEAR VIEW ===== */
 .back {
   cursor: pointer;
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: #555;
 }
 
+.year-title {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+/* ===== EVENTS ===== */
 .event {
   background: white;
-  padding: 25px;
+  padding: 24px;
   border-radius: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
@@ -94,11 +122,11 @@ button {
 }
 
 .event-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 26px;
+  font-size: 24px;
   margin-bottom: 16px;
 }
 
+/* ===== GALLERY ===== */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -140,7 +168,7 @@ button {
 <body>
 
 <header id="pageHeader">
-  <h1 id="headerTitle">Album Gia Đình</h1>
+  <h1 id="headerTitle">Album gia đình</h1>
 </header>
 
 <div class="container">
@@ -170,7 +198,8 @@ function login() {
   if (password.value === PASSWORD) {
     loginBox.style.display = "none";
     pageHeader.style.display = "block";
-    headerTitle.innerText = "Album Gia Đình";
+    pageHeader.classList.remove("sticky");
+    headerTitle.innerText = "Album gia đình";
     home.style.display = "block";
     loadHome();
   } else alert("Sai mật khẩu");
@@ -181,7 +210,11 @@ function loadHome() {
     .then(r => r.json())
     .then(data => {
       yearsData = data.years;
-      home.innerHTML = "";
+      home.innerHTML = `
+        <div class="cover">
+          <img src="images/cover.jpg">
+        </div>
+      `;
       yearsData.forEach((y, i) => {
         const div = document.createElement("div");
         div.className = "year-item";
@@ -196,9 +229,10 @@ function openYear(index) {
   home.style.display = "none";
   yearView.style.display = "block";
 
-  const year = yearsData[index];
-  headerTitle.innerText = `Năm ${year.year}`; // 🔥 ĐỔI TIÊU ĐỀ
+  pageHeader.classList.add("sticky");
+  headerTitle.innerText = `Năm ${yearsData[index].year}`;
 
+  const year = yearsData[index];
   yearView.innerHTML = `
     <div class="back" onclick="goBack()">← Quay lại</div>
     ${year.events.map(e => `
@@ -218,7 +252,8 @@ function openYear(index) {
 function goBack() {
   yearView.style.display = "none";
   home.style.display = "block";
-  headerTitle.innerText = "Album Gia Đình"; // 🔁 TRẢ VỀ
+  pageHeader.classList.remove("sticky");
+  headerTitle.innerText = "Album gia đình";
 }
 
 function showImage(src) {
