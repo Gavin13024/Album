@@ -5,7 +5,7 @@
 <title>Album Gia Đình</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -25,12 +25,14 @@ header h1 {
   font-size: 40px;
 }
 
+/* ===== CONTAINER ===== */
 .container {
   max-width: 1100px;
   margin: auto;
   padding: 20px;
 }
 
+/* ===== LOGIN ===== */
 .login-box {
   max-width: 400px;
   margin: 80px auto;
@@ -57,15 +59,17 @@ button {
 /* ===== YEAR LIST ===== */
 .year-item {
   background: white;
-  padding: 25px;
+  padding: 26px;
   border-radius: 18px;
   margin-bottom: 20px;
-  font-size: 26px;
-  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-family: 'Montserrat', sans-serif; /* FONT MỚI */
+  font-weight: 700;
   cursor: pointer;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 /* ===== TIMELINE ===== */
@@ -86,13 +90,13 @@ button {
 .event-date {
   font-weight: 600;
   color: #8a7b55;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .event-title {
   font-family: 'Playfair Display', serif;
   font-size: 26px;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .gallery {
@@ -136,7 +140,7 @@ button {
 <body>
 
 <header id="pageHeader">
-  <h1>Album Gia Đình</h1>
+  <h1 id="headerTitle">Album Gia Đình</h1>
 </header>
 
 <div class="container">
@@ -166,6 +170,7 @@ function login() {
   if (password.value === PASSWORD) {
     loginBox.style.display = "none";
     pageHeader.style.display = "block";
+    headerTitle.innerText = "Album Gia Đình";
     home.style.display = "block";
     loadHome();
   } else alert("Sai mật khẩu");
@@ -192,9 +197,10 @@ function openYear(index) {
   yearView.style.display = "block";
 
   const year = yearsData[index];
+  headerTitle.innerText = `Năm ${year.year}`; // 🔥 ĐỔI TIÊU ĐỀ
+
   yearView.innerHTML = `
     <div class="back" onclick="goBack()">← Quay lại</div>
-    <h2>${year.year}</h2>
     ${year.events.map(e => `
       <div class="event">
         <div class="event-date">${e.date}</div>
@@ -212,6 +218,7 @@ function openYear(index) {
 function goBack() {
   yearView.style.display = "none";
   home.style.display = "block";
+  headerTitle.innerText = "Album Gia Đình"; // 🔁 TRẢ VỀ
 }
 
 function showImage(src) {
