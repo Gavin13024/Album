@@ -19,12 +19,10 @@ header {
   display: none;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  padding: 18px 20px;
+  padding: 12px 16px;
   background: #f6f1e7;
 }
 
-/* sticky */
 header.sticky {
   position: sticky;
   top: 0;
@@ -32,12 +30,12 @@ header.sticky {
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* back button in header */
+/* back button */
 #headerBack {
   position: absolute;
-  left: 20px;
+  left: 14px;
+  font-size: 14px; /* ↓ nhỏ hơn */
   cursor: pointer;
-  font-size: 16px;
   color: #555;
   display: none;
 }
@@ -45,34 +43,35 @@ header.sticky {
 /* title */
 header h1 {
   margin: 0;
-  font-size: 36px;
-  letter-spacing: 1px;
+  font-size: 22px; /* ↓ nhỏ hơn */
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-/* main title */
+/* home title */
 header.home h1 {
   font-family: 'Cormorant Garamond', serif;
+  font-size: 34px;
 }
 
 /* year title */
 header.year h1 {
   font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
 }
 
 /* ===== CONTAINER ===== */
 .container {
   max-width: 1100px;
   margin: auto;
-  padding: 20px;
+  padding: 16px;
 }
 
 /* ===== LOGIN ===== */
 .login-box {
-  max-width: 400px;
-  margin: 90px auto;
+  max-width: 380px;
+  margin: 80px auto;
   background: white;
-  padding: 30px;
+  padding: 28px;
   border-radius: 20px;
   text-align: center;
 }
@@ -94,17 +93,17 @@ button {
 /* ===== COVER ===== */
 .cover img {
   width: 100%;
-  border-radius: 22px;
-  margin-bottom: 30px;
+  border-radius: 20px;
+  margin-bottom: 26px;
 }
 
 /* ===== YEAR LIST ===== */
 .year-item {
   background: white;
-  padding: 18px 22px;
-  border-radius: 18px;
-  margin-bottom: 14px;
-  font-size: 18px; /* ↓ nhỏ hơn nữa */
+  padding: 16px 20px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  font-size: 17px; /* ↓ nhỏ hơn nữa */
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
@@ -116,34 +115,51 @@ button {
 /* ===== EVENTS ===== */
 .event {
   background: white;
-  padding: 24px;
-  border-radius: 20px;
-  margin-bottom: 28px;
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 24px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
 .event-date {
   font-weight: 600;
+  font-size: 14px;
   color: #8a7b55;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .event-title {
-  font-size: 24px;
-  margin-bottom: 16px;
+  font-size: 18px;
+  margin-bottom: 12px;
 }
 
 /* ===== GALLERY ===== */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr); /* mobile: 3 ảnh */
+  gap: 10px;
 }
 
 .gallery img {
   width: 100%;
-  border-radius: 16px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 12px;
   cursor: pointer;
+}
+
+/* tablet */
+@media (min-width: 600px) {
+  .gallery {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* desktop */
+@media (min-width: 900px) {
+  .gallery {
+    grid-template-columns: repeat(5, 1fr);
+  }
 }
 
 /* ===== IMAGE VIEW ===== */
@@ -164,9 +180,9 @@ button {
 #close {
   position: absolute;
   top: 20px;
-  right: 30px;
+  right: 24px;
   color: white;
-  font-size: 32px;
+  font-size: 30px;
   cursor: pointer;
 }
 </style>
@@ -207,7 +223,6 @@ function login() {
     loginBox.style.display = "none";
     pageHeader.style.display = "flex";
     pageHeader.className = "home";
-    pageHeader.classList.remove("sticky");
     headerBack.style.display = "none";
     headerTitle.innerText = "Album gia đình";
     home.style.display = "block";
@@ -241,7 +256,7 @@ function openYear(index) {
 
   pageHeader.className = "year sticky";
   headerBack.style.display = "block";
-  headerTitle.innerText = yearsData[index].year; // CHỈ HIỂN THỊ SỐ
+  headerTitle.innerText = yearsData[index].year;
 
   const year = yearsData[index];
   yearView.innerHTML = year.events.map(e => `
@@ -261,7 +276,6 @@ function goBack() {
   yearView.style.display = "none";
   home.style.display = "block";
   pageHeader.className = "home";
-  pageHeader.classList.remove("sticky");
   headerBack.style.display = "none";
   headerTitle.innerText = "Album gia đình";
 }
