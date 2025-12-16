@@ -1,40 +1,91 @@
 {
   "cover": "images/cover.jpg",
 
-  "albums": [
+  "years": [
     {
-      "title": "Năm 2026",
-      "photos": [
-        "images/tet1.jpg",
-        "images/tet2.jpg"
+      "year": "Năm 2026",
+      "events": [
+        {
+          "date": "01/01/2026",
+          "title": "Tết Nguyên Đán",
+          "photos": [
+            "images/2026/tet/1.jpg",
+            "images/2026/tet/2.jpg"
+          ]
+        },
+        {
+          "date": "20/07/2026",
+          "title": "Tốt nghiệp",
+          "photos": [
+            "images/2026/totnghiep/1.jpg",
+            "images/2026/totnghiep/2.jpg"
+          ]
+        }
       ]
     },
     {
-      "title": "Năm 2025",
-      "photos": [
-        "images/totnghiep1.jpg",
-        "images/totnghiep2.jpg"
+      "year": "Năm 2025",
+      "events": [
+        {
+          "date": "Tháng 7",
+          "title": "Vĩnh Hy",
+          "photos": [
+            "images/2025/vinhhy/1.jpg",
+            "images/2025/vinhhy/2.jpg"
+          ]
+        }
       ]
     },
     {
-      "title": "Năm 2024",
-      "photos": [
-        "images/dalat1.jpg",
-        "images/dalat3.jpg"
+      "year": "Năm 2024",
+      "events": [
+        {
+          "date": "Tháng 4",
+          "title": "Hòn Sơn",
+          "photos": [
+            "images/2025/honson/1.jpg",
+            "images/2025/honson/2.jpg"
+          ]
+        }
       ]
     },
     {
-      "title": "Năm 2023",
-      "photos": [
-        "images/honson1.jpg",
-        "images/honson2.jpg"
+      "year": "Năm 2023",
+      "events": [
+        {
+          "date": "15/08/2025",
+          "title": "Du lịch Đà Lạt",
+          "photos": [
+            "images/2025/dalat/1.jpg",
+            "images/2025/dalat/2.jpg"
+          ]
+        }
       ]
     },
     {
-      "title": "Năm 2022",
-      "photos": [
-        "images/vinhhy1.jpg",
-        "images/vinhhy2.jpg"
+      "year": "Năm 2022",
+      "events": [
+        {
+          "date": "15/08/2025",
+          "title": "Du lịch Đà Lạt",
+          "photos": [
+            "images/2025/dalat/1.jpg",
+            "images/2025/dalat/2.jpg"
+          ]
+        }
+      ]
+    },
+    {
+      "year": "Năm 2021",
+      "events": [
+        {
+          "date": "15/08/2025",
+          "title": "Đà Lạt",
+          "photos": [
+            "images/2025/dalat/1.jpg",
+            "images/2025/dalat/2.jpg"
+          ]
+        }
       ]
     }
   ]
