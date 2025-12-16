@@ -3,35 +3,35 @@
 
   "albums": [
     {
-      "title": "Tết",
+      "title": "Năm 2026",
       "photos": [
         "images/tet1.jpg",
         "images/tet2.jpg"
       ]
     },
     {
-      "title": "Tốt nghiệp",
+      "title": "Năm 2025",
       "photos": [
         "images/totnghiep1.jpg",
         "images/totnghiep2.jpg"
       ]
     },
     {
-      "title": "Đà Lạt",
+      "title": "Năm 2024",
       "photos": [
         "images/dalat1.jpg",
         "images/dalat3.jpg"
       ]
     },
     {
-      "title": "Hòn Sơn",
+      "title": "Năm 2023",
       "photos": [
         "images/honson1.jpg",
         "images/honson2.jpg"
       ]
     },
     {
-      "title": "Vĩnh Hy",
+      "title": "Năm 2022",
       "photos": [
         "images/vinhhy1.jpg",
         "images/vinhhy2.jpg"
